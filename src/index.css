@@ -1,0 +1,98 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 260 50% 5%;
+    --foreground: 0 0% 98%;
+
+    --card: 260 30% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 260 30% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 270 75% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 330 85% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 260 20% 20%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 45 100% 60%;
+    --accent-foreground: 0 0% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 260 20% 20%;
+    --input: 260 20% 20%;
+    --ring: 270 75% 60%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image: radial-gradient(circle at 20% 20%, rgba(95, 61, 196, 0.2) 0%, transparent 40%),
+                     radial-gradient(circle at 80% 80%, rgba(247, 37, 133, 0.15) 0%, transparent 30%);
+    background-attachment: fixed;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-lg border border-white/10 shadow-xl;
+  }
+  
+  .glass-input {
+    @apply bg-muted/40 backdrop-blur-sm border border-white/10 focus:border-party-pink/50 focus:ring-party-pink/30;
+  }
+  
+  .btn-glow {
+    @apply relative overflow-hidden transition-all duration-300 ease-out;
+  }
+  
+  .btn-glow::before {
+    @apply content-[''] absolute top-0 left-[-100%] w-full h-full bg-gradient-shimmer;
+    animation: shimmer 2s infinite;
+  }
+  
+  .btn-glow:hover {
+    @apply shadow-lg shadow-party-pink/20;
+  }
+  
+  .particle {
+    @apply absolute rounded-full bg-white opacity-0 pointer-events-none;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+    animation: float 6s infinite ease-in-out;
+  }
+}
