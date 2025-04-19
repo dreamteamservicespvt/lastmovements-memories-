@@ -59,6 +59,9 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
         <thead>
           <tr className="bg-muted/50">
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+              ID
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
               Name
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
@@ -84,6 +87,9 @@ const RegistrationTable: React.FC<RegistrationTableProps> = ({
               key={registration.id}
               className="hover:bg-muted/30 transition-colors"
             >
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-party-pink">
+                {registration.registrationId || "N/A"}
+              </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
                 {registration.name}
               </td>

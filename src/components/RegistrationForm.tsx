@@ -50,8 +50,15 @@ const RegistrationForm: React.FC = () => {
       const formData = { name, year, rollNumber, phone: `+91${phone}` };
       const result = await addRegistration(formData);
       
-      // Save the original data in context without the +91 prefix for consistency
-      setRegistrationData({ name, year, rollNumber, phone });
+      // Save the result with the generated ID to the context
+      setRegistrationData({
+        name, 
+        year, 
+        rollNumber, 
+        phone,
+        registrationId: result.registrationId
+      });
+      
       toast.success("Registration successful!");
       setCurrentStep(2); // Move to payment step
     } catch (error) {

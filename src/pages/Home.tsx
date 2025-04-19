@@ -5,6 +5,7 @@ import HeroSection from "../components/HeroSection";
 import RegistrationForm from "../components/RegistrationForm";
 import PaymentStep from "../components/PaymentStep";
 import ReceiptUpload from "../components/ReceiptUpload";
+import Footer from "../components/Footer";
 import { motion } from "framer-motion";
 
 const RegistrationSteps = () => {
@@ -99,10 +100,11 @@ const Home = () => {
   
   return (
     <RegistrationProvider>
-      <div className="min-h-screen">
+      <div className="min-h-screen flex flex-col">
         <Particles count={30} />
         <HeroSection onClickReserve={handleScrollToForm} />
         <RegistrationSteps />
+        <Footer />
       </div>
     </RegistrationProvider>
   );

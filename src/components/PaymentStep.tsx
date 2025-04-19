@@ -1,24 +1,25 @@
-
 import React, { useEffect, useState } from "react";
 import { useRegistration } from "../contexts/RegistrationContext";
 import { motion } from "framer-motion";
 import QRCode from "qrcode";
+import { useEventSettings } from "../contexts/EventSettingsContext";
 
 const PaymentStep: React.FC = () => {
+  const { eventSettings } = useEventSettings();
   const { registrationData, setCurrentStep } = useRegistration();
   const [qrImageUrl, setQrImageUrl] = useState<string>("");
   const [isQrLoading, setIsQrLoading] = useState(true);
-
+  
   useEffect(() => {
     if (!registrationData) return;
 
     const generateQRCode = async () => {
       try {
-        const { name, rollNumber, year, phone } = registrationData;
-        const amount = "600";
+        const { name, rollNumber, year, phone, registrationId } = registrationData;
+        const amount = eventSettings?.price.toString() || "600";
         const payeeName = "Govardhan";
         const payeeUpi = "9849834102@ybl";
-        const transactionNote = `Entry Fee for ${name} - ${rollNumber} - ${year} - ${phone}`;
+        const transactionNote = `ID:${registrationId} - Entry Fee for ${name} - ${rollNumber} - ${year} - ${phone}`;
         
         const upiUrl = `upi://pay?pa=${payeeUpi}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
         
@@ -41,17 +42,16 @@ const PaymentStep: React.FC = () => {
     };
 
     generateQRCode();
-  }, [registrationData]);
+  }, [registrationData, eventSettings]);
 
-  // Add the missing handlePaymentClick function
   const handlePaymentClick = () => {
     if (!registrationData) return;
     
-    const { name, rollNumber, year, phone } = registrationData;
-    const amount = "600";
+    const { name, rollNumber, year, phone, registrationId } = registrationData;
+    const amount = eventSettings?.price.toString() || "600";
     const payeeName = "Govardhan";
     const payeeUpi = "9849834102@ybl";
-    const transactionNote = `Entry Fee for ${name} - ${rollNumber} - ${year} - ${phone}`;
+    const transactionNote = `ID:${registrationId} - Entry Fee for ${name} - ${rollNumber} - ${year} - ${phone}`;
     
     const upiUrl = `upi://pay?pa=${payeeUpi}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
     
@@ -59,7 +59,6 @@ const PaymentStep: React.FC = () => {
     window.location.href = upiUrl;
   };
 
-  // Add the missing goToReceiptUpload function
   const goToReceiptUpload = () => {
     setCurrentStep(3); // Move to receipt upload step
   };
@@ -79,6 +78,9 @@ const PaymentStep: React.FC = () => {
         <div className="mb-6">
           <div className="text-gray-300 text-center mb-4">
             <p className="mb-1">Hi <span className="text-party-gold font-semibold">{registrationData.name}</span></p>
+            <p className="mb-1">
+              Registration ID: <span className="text-party-pink font-bold">{registrationData.registrationId}</span>
+            </p>
             <p className="mb-1">
               Roll No: <span className="text-party-pink">{registrationData.rollNumber}</span>, 
               Year: <span className="text-party-pink">{registrationData.year}</span>
@@ -100,7 +102,7 @@ const PaymentStep: React.FC = () => {
           </div>
           
           <div className="text-center mb-6">
-            <p className="text-white font-semibold mb-2">Entry Fee: ₹600</p>
+            <p className="text-white font-semibold mb-2">Entry Fee: ₹{eventSettings?.price || 600}</p>
             <p className="text-sm text-gray-300">Scan the QR code or click the button below to pay</p>
           </div>
           
@@ -111,7 +113,7 @@ const PaymentStep: React.FC = () => {
               onClick={handlePaymentClick}
               className="btn-glow w-full py-3 px-4 rounded-lg bg-party-gold text-gray-900 font-medium transition-all duration-300"
             >
-              Pay Entry Fee ₹600
+              Pay Entry Fee ₹{eventSettings?.price || 600}
             </motion.button>
             
             <div className="text-center text-sm text-gray-400 mt-3">

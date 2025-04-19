@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { useRegistration } from "../contexts/RegistrationContext";
 import { motion } from "framer-motion";
@@ -79,9 +78,14 @@ const ReceiptUpload: React.FC = () => {
       
       setUploadProgress(95);
       
+      // Add +91 prefix to phone number to match the format used during registration
+      const phoneWithPrefix = registrationData.phone.startsWith('+91') 
+        ? registrationData.phone 
+        : `+91${registrationData.phone}`;
+      
       // Update Firestore with receipt URL
       await updateRegistrationWithReceipt(
-        { field: "phone", value: registrationData.phone },
+        { field: "phone", value: phoneWithPrefix },
         { receiptUrl: response.secure_url, cloudinaryId: response.public_id }
       );
       
