@@ -74,9 +74,9 @@ const RegistrationForm: React.FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full mx-auto px-0 md:px-4 md:max-w-md"
+      className="w-[98%] mx-auto md:w-full md:px-4 md:max-w-md"
     >
-      <div className="glass-card rounded-xl p-3 sm:p-6 md:p-8">
+      <div className="glass-card rounded-xl p-4 sm:p-6 md:p-8">
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white text-center">Register for the Event</h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
