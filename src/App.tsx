@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import { EventSettingsProvider } from "./contexts/EventSettingsContext";
+import Gallery from "./components/Gallery";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/gallery" element={<Gallery />} />
           </Routes>
         </BrowserRouter>
       </EventSettingsProvider>
